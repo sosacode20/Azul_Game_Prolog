@@ -33,3 +33,32 @@ split_at(Index, [Head|Tail], First_part, Last_part) :-
     New_index is Index - 1,
     split_at(New_index, Tail, F, Last_part),
     append([Head], F, First_part),!.
+
+% --------------------------------------------------------
+
+% Aqui estan todos los predicados que trabajan con un grupo
+% Los grupos son una lista donde cada elementos tiene el siguiente
+% formato: Element:Amount
+% Son utiles para los predicados del Centro de Mesa y las Factorias
+
+add_to_group(Tile, [], [Tile:1]).
+add_to_group(Tile, [Tile:Amount | Tail], [Tile:Amount2 | Tail]):-
+    Amount2 is Amount + 1,!.
+add_to_group(Tile, [Head:Amount | Tail], Group) :-
+    Head \== Tile,
+    add_to_group(Tile, Tail, Group2),
+    Group = [Head:Amount | Group2],!.
+
+% Mezcla 2 grupos
+merge_groups(Group1, Group2, Merged_group):-
+    expanded(Group1, Expanded_group),
+    add_list_of_elements_to_group(Expanded_group, Group2, Merged_group).
+
+% remove_from_group(Group, Element, New_group) :-
+
+
+add_list_of_elements_to_group([Element], Group, New_group):-
+    add_to_group(Element, Group, New_group),!.
+add_list_of_elements_to_group([Head | Tail], Group, New_group):-
+    add_list_of_elements_to_group(Tail, Group, New_group1),
+    add_to_group(Head, New_group1, New_group).
