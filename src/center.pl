@@ -1,6 +1,6 @@
 :- [utils].
 
-create_center(Center) :-
+new_center(Center) :-
     Center = [first:1].
 
 % ----------------------------------------------------------------
