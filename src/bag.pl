@@ -23,3 +23,10 @@ extract_from_bag(Bag, Number_of_tiles, Extracted_tiles, Updated_bag):-
 add_to_bag(Bag, List_of_tiles, Updated_bag) :-
     append(Bag, List_of_tiles, Updated_bag).
     
+% ----------------------------------------------------------------------------------------
+
+print_bag(Bag, Title) :-
+    print(Title),
+    nl, nl,
+    portray_clause(Bag).
+    
