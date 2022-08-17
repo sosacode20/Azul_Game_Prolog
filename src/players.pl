@@ -30,3 +30,16 @@ create_players([]).
 create_players([Id:Style | Other_players]) :-
     create_player(Id:Style),
     create_players(Other_players).
+
+% ----------------------------------------------------------------------------
+
+% Este predicado elimina de la base de datos un jugador si existe su nombre guardado
+remove_player(Id):-
+    retract(player(Id, _)),!.
+
+remove_player(_):-
+    write('Player does not exist'), nl.
+
+% Este predicado se encarga de eliminar todos los jugadores que se encuentren en la BD
+remove_players :-
+    retractall(player(_,_)).
