@@ -62,3 +62,15 @@ add_list_of_elements_to_group([Element], Group, New_group):-
 add_list_of_elements_to_group([Head | Tail], Group, New_group):-
     add_list_of_elements_to_group(Tail, Group, New_group1),
     add_to_group(Head, New_group1, New_group).
+
+% --------------------------------------------------------------
+
+% Triunfa si en la lista dada el Element se encuentra en la posicion
+% dada por Index
+list_index(List, Index, Element) :-
+    List = [Head | _],
+    Head = Element,
+    Index = 0;
+    List = [_ | Tail],
+    list_index(Tail, Index2, Element),
+    Index is Index2 + 1.
