@@ -2,7 +2,7 @@
 
 % Este predicado triunfa si X es un azulejo valido
 tiles(X) :-
-    member(X, [azul, amarillo, rojo, negro, cyan]).
+    member(X, [azul, amarillo, rojo, negro, blanco]).
 
 % ----------------------------------------------------------------------------------------
 
