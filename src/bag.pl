@@ -14,3 +14,6 @@ new_bag(X) :-
     random_permutation(Expanded, X).
 
 % ----------------------------------------------------------------------------------------
+
+extract_from_bag(Bag, Number_of_tiles, Extracted_tiles, Updated_bag):-
+    split_at(Number_of_tiles, Bag, Extracted_tiles, Updated_bag).

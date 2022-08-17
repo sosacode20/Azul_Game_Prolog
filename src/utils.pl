@@ -20,3 +20,16 @@ expanded([X:Amount|Tail], Expanded) :-
     expanded(X:Amount, Expanded1),
     expanded(Tail, Expanded2),
     append(Expanded1, Expanded2, Expanded),!.
+
+% -------------------------------------------------------
+
+% Triunfa si el resultado de picar una lista en la posicion justo antes de Index
+% es First_part + Last_part
+split_at(0,[Element|Tail], [], [Element|Tail]):- !.
+split_at(Index, [Head|Tail], First_part, Last_part) :-
+    Index > 0,
+    length([Head|Tail], Length),
+    Length > 1,
+    New_index is Index - 1,
+    split_at(New_index, Tail, F, Last_part),
+    append([Head], F, First_part),!.
