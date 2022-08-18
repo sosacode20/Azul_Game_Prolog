@@ -201,3 +201,22 @@ extract_from_tile_collection(Collection, Tile_to_extract, Extracted_tiles, New_c
     append(First_part, Tail, New_collection).
 
 ```
+
+---
+
+## Entidad Factorías
+
+### Funcionalidades
+
+#### Crear las factorías
+
+Aquí lo que se tiene es un predicado que a partir de una Bolsa y la cantidad de jugadores que se tengan creados en el juego pues permite crear las factorías correspondientes y rellenarlas con 4 azulejos cada una o *con menos si no alcanzan los azulejos de la Bolsa*.
+
+```Prolog
+% new_factories(+Bag, -Factories, -Updated_bag)
+
+new_factories(Bag, Factories, Updated_bag) :-
+    get_players_count(Count),
+    factory_player_relation(Count, Factory_count),
+    new_factories_(Bag, Factory_count, Factories, Updated_bag).
+```
