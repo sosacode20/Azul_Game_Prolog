@@ -8,7 +8,7 @@ factory_player_relation(Players_count, Factory_count):-
 new_factories(Bag, Factories, Updated_bag) :-
     get_players_count(Count),
     factory_player_relation(Count, Factory_count),
-    new_factories_(Bag, Factory_count, Factories, Updated_bag).
+    new_factories_(Bag, Factory_count, Factories, Updated_bag),!.
 
 new_factories_(Bag, 1, [Filled_factory], Updated_bag):-
     extract_from_bag(Bag, 4, Extracted_tiles, Updated_bag),
