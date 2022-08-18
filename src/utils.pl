@@ -1,4 +1,23 @@
 
+% Esto permite crear al predicado inside como un operador
+:- op(500, xfy, inside).
+
+%% inside (?Element, +Low:High)
+% Dice si X se encuentra en el intervalo denotado por [Low-High]
+inside(X, Low:High):-
+    integer(Low),
+    integer(High),
+    High >= Low,
+    (
+        X = Low,!;
+        (
+            Next is Low + 1,
+            inside(X, Next:High)
+        )
+    ).
+
+% -----------------------------------------------------------------
+
 % El predicado expanded dice si la lista de elementos en el 1er argumento
 % donde todos sus elementos son de la forma [X:Amount, Y:Amount2, ...]
 % coincide con la lista expandida dada en el 2do argumento, es decir,
