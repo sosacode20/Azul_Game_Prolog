@@ -11,7 +11,7 @@ extract_from_tile_collection(Collection, Tile_to_extract, Extracted_tiles, New_c
     tiles(Tile_to_extract),
     extract_first_(Collection, Extracted_first, New_collection_0), % Extracted_first puede ser lista vacia
     list_index(New_collection_0, Index, Tile_to_extract:Amount),!,
-    split_at(Index, New_collection_0, First_part, [_ | Tail]),
+    split(Index, New_collection_0, First_part, [_ | Tail]),
     append(Extracted_first, [Tile_to_extract:Amount], Extracted_tiles),
     append(First_part, Tail, New_collection).
 
@@ -20,7 +20,7 @@ extract_from_tile_collection(Collection, Tile_to_extract, Extracted_tiles, New_c
 extract_first_(Collection, [first:1], New_collection) :-
     % Lo siguiente verifica que la ficha del primer jugador se encuentre
     list_index(Collection, Index, first:1),!,
-    split_at(Index, Collection, First_part, [_ | Tail]),
+    split(Index, Collection, First_part, [_ | Tail]),
     append(First_part, Tail, New_collection).
     
 extract_first_(Collection, [], Collection).
