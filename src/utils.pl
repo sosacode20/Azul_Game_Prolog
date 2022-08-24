@@ -44,14 +44,17 @@ expanded([X:Amount|Tail], Expanded) :-
 
 % Triunfa si el resultado de picar una lista en la posicion justo antes de Index
 % es First_part + Last_part
-split_at(0,[Element|Tail], [], [Element|Tail]):- !.
-split_at(Index, [Head|Tail], First_part, Last_part) :-
+split(0, List, [], List):-
+    is_list(List), !.
+split(_, [], [], []):- !.
+split(Index, [Head | Tail], [Head | Tail], []) :-
+    length([Head | Tail], Length),
+    Index >= Length,!.
+split(Index, [Head | Tail], First_part, Last_part) :-
     Index > 0,
-    length([Head|Tail], Length),
-    Length > 1,
     New_index is Index - 1,
-    split_at(New_index, Tail, F, Last_part),
-    append([Head], F, First_part),!.
+    split(New_index, Tail, F, Last_part),
+    First_part = [Head | F].
 
 % --------------------------------------------------------
 
