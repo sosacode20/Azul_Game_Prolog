@@ -58,6 +58,32 @@ split(Index, [Head | Tail], First_part, Last_part) :-
 
 % --------------------------------------------------------
 
+% Triunfa si la lista final es la original pero desplazada Amount posiciones
+% si Amount es negativo, desplaza hacia la izquierda, si es positivo,
+% desplaza hacia la derecha
+displaced([Element | Tail], Amount, List_displaced) :-
+    length([Element|Tail], Length),
+    integer(Amount),
+    Index is (-1 * Amount) mod Length,
+    split(Index, [Element|Tail], First, Last),
+    append(Last,First,List_displaced).
+
+% --------------------------------------------------------------------------
+
+% Este predicado triunfa si la lista final es una lista de listas de tamano Amount
+% donde su primer elemento es la lista que se pasa como argumento 1 y cada lista
+% consecutiva es la misma que la anterior pero rotada una posicion a la derecha
+% Nota: Este predicado es usado en la creacion del Wall
+add_rotated([Element | Tail], 0, [[Element | Tail]]).
+add_rotated([Element | Tail], Amount, Rotated_list) :-
+    Amount > 0,
+    New_amount is Amount - 1,
+    add_rotated([Element | Tail], New_amount, Rotated1),
+    displaced([Element | Tail], Amount, Rotated2),
+    append(Rotated1, [Rotated2], Rotated_list),!.
+
+% --------------------------------------------------------
+
 % Aqui estan todos los predicados que trabajan con un grupo
 % Los grupos son una lista donde cada elementos tiene el siguiente
 % formato: Element:Amount
