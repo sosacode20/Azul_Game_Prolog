@@ -165,3 +165,22 @@ indexed_list([Original_list_Head | Original_Tail], Start_index, [Start_index:Ori
     integer(Start_index),
     New_index is Start_index + 1,
     indexed_list(Original_Tail, New_index, Indexed_tail),!.
+
+% -------------------------------------------------------------------------
+
+% Lower clamp es un predicado que unifica Result con 0 en caso de que
+% Number sea negativo, en otro caso Result unifica con Number
+clamp_to_zero(Number, Result):-
+    Number < 0,
+    Result = 0,!.
+
+clamp_to_zero(Number, Result):-
+    % Si se va por este camino el numero es positivo
+    Result = Number,!.
+
+clamp_up(Number, Top_limit, Result):-
+    Number >= Top_limit,
+    Result = Top_limit,!.
+
+clamp_up(Number, _, Result):-
+    Result = Number,!.
