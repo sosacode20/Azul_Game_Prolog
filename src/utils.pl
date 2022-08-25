@@ -122,3 +122,14 @@ list_index(List, Index, Element) :-
     List = [_ | Tail],
     list_index(Tail, Index2, Element),
     Index is Index2 + 1.
+
+% Dada una matriz y un indice se devuelve la columna que se encuentra
+% en ese indice
+matrix_column_index([[Head | Tail]], Index, [Column]) :- 
+    % element_index(Column, [Head|Tail], Index).
+    list_index([Head | Tail], Index, Column).
+matrix_column_index(Matrix, Index, Column) :-
+    Matrix = [Head|Tail],
+    matrix_column_index(Tail, Index, Column2),
+    matrix_column_index([Head], Index, Column1),
+    append(Column1, Column2, Column).
