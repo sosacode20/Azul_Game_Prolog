@@ -133,3 +133,14 @@ matrix_column_index(Matrix, Index, Column) :-
     matrix_column_index(Tail, Index, Column2),
     matrix_column_index([Head], Index, Column1),
     append(Column1, Column2, Column).
+
+% --------------------------------------------------------------------------
+
+% Este predicado triunfa si el string del 3er parametro es el mismo que el primero
+% pero repetido Amount_of_times veces
+repeat_string_pattern(X,1, X).%:- string(X).
+repeat_string_pattern(X, Amount_of_times, Repeated) :-
+    Amount_of_times > 1,
+    New_amount is Amount_of_times - 1,
+    repeat_string_pattern(X, New_amount, Repeated2),
+    string_concat(X, Repeated2, Repeated),!.
