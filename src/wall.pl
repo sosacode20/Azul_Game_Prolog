@@ -74,3 +74,48 @@ valid_tiles_for_wall_row(Wall, Row_index, Valid_tiles):-
     findall(Tile, member(Tile:0, Row), Valid_tiles).
 
 % -----------------------------------------------------------------
+
+% Predicados necesarios para imprimir el Muro
+
+print_wall_rows_([]):-!.
+print_wall_rows_([Wall]):-
+    length(Wall, Length),
+    Length == 5,
+    print_row_(Wall).
+print_wall_rows_([Head|Tail]):-
+    print_wall_rows_(Tail),
+    nl,
+    print_wall_rows_([Head]).
+
+% Imprime un Wall con el nombre Wall_name
+print_wall(Wall, Wall_name):-
+    % valid_wall(Wall),
+    string(Wall_name),
+    reverse(Wall, Wall_reversed),
+    nl,nl,
+    format("~`+t ~s ~`+t~66+", [Wall_name]),nl,
+    print_wall_rows_(Wall_reversed),!,nl,
+    format("~`+t~66+", []),nl,nl.
+
+% format
+
+% Imprime un Row en una linea
+print_row_(Row):-
+    is_list(Row),
+    % findall(Y, (element_representation(Row,Z), member(Y,Z)),Representation),
+    element_representation(Row, Representation),
+    length(Row,Length),
+    repeat_string_pattern("~t~s~t~13+|",Length, Repeated_pattern),
+    string_concat("|",Repeated_pattern, Repeated_pattern2),
+    format(Repeated_pattern2, Representation),!.
+
+element_representation([Element:Enabled], [Representation]):-
+    Enabled == 0,
+    Representation = "-";
+    Enabled == 1,
+    Representation = Element.
+
+element_representation([Head | Tail],Representation):-
+    element_representation(Tail, Representation2),
+    element_representation([Head], Representation1),
+    append(Representation1, Representation2, Representation).
