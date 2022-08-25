@@ -33,3 +33,42 @@ add_to_zone(Zone, Row_index, Wall, Tile:Amount, Updated_zone, Amount_to_penaliza
     New_amount_0 is Max_amount + Res, % Si Res es negativo es porque queda espacio libre
     clamp_up(New_amount_0, Max_amount, New_amount),
     append(First_part, [Max_amount:Tile:New_amount | Tail], Updated_zone),!.
+
+% ---------------------------------------------------------------------
+
+% Predicados para pintar la zona de preparacion
+
+% Representation es una lista de string que contienen la representacion de un elemento
+% para luego ser impresos
+preparation_row_representation(Maximum_amount:Element:Amount, Representation):-
+    Element = empty,
+    repeated_list("_", Maximum_amount, Representation);
+    repeated_list(Element, Amount, Representation_of_element),
+    Count is Maximum_amount - Amount,
+    repeated_list("_", Count, Tail_representation),
+    append(Representation_of_element, Tail_representation, Representation).
+
+print_preparation_row_(Row):-
+    preparation_row_representation(Row, Representation),
+    length(Representation, Length),
+    Length =< 5,
+    Count_to_complete is 5 - Length,
+    repeated_list(" ", Count_to_complete, Rest_list),
+    append(Representation, Rest_list, Row_to_print),
+    repeat_string_pattern("~t~s~t~13+|", 5, Repeated_pattern),
+    string_concat("|", Repeated_pattern, Repeated_pattern2),
+    format(Repeated_pattern2, Row_to_print),!.
+
+print_preparation_rows([]):-!.
+print_preparation_rows([Row]):-
+    print_preparation_row_(Row).
+print_preparation_rows([Head | Tail]):-
+    print_preparation_rows([Head]),
+    nl,
+    print_preparation_rows(Tail),!.
+
+print_preparation_zone(Zone, Header_name):-
+    string(Header_name),
+    format("~`+t ~s ~`+t~66+", [Header_name]),nl,
+    print_preparation_rows(Zone),!,nl,
+    format("~`+t~66+", []),nl,nl.
