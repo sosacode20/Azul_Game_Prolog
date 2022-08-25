@@ -58,6 +58,32 @@ split(Index, [Head | Tail], First_part, Last_part) :-
 
 % --------------------------------------------------------
 
+% Triunfa si la lista final es la original pero desplazada Amount posiciones
+% si Amount es negativo, desplaza hacia la izquierda, si es positivo,
+% desplaza hacia la derecha
+displaced([Element | Tail], Amount, List_displaced) :-
+    length([Element|Tail], Length),
+    integer(Amount),
+    Index is (-1 * Amount) mod Length,
+    split(Index, [Element|Tail], First, Last),
+    append(Last,First,List_displaced).
+
+% --------------------------------------------------------------------------
+
+% Este predicado triunfa si la lista final es una lista de listas de tamano Amount
+% donde su primer elemento es la lista que se pasa como argumento 1 y cada lista
+% consecutiva es la misma que la anterior pero rotada una posicion a la derecha
+% Nota: Este predicado es usado en la creacion del Wall
+add_rotated([Element | Tail], 0, [[Element | Tail]]).
+add_rotated([Element | Tail], Amount, Rotated_list) :-
+    Amount > 0,
+    New_amount is Amount - 1,
+    add_rotated([Element | Tail], New_amount, Rotated1),
+    displaced([Element | Tail], Amount, Rotated2),
+    append(Rotated1, [Rotated2], Rotated_list),!.
+
+% --------------------------------------------------------
+
 % Aqui estan todos los predicados que trabajan con un grupo
 % Los grupos son una lista donde cada elementos tiene el siguiente
 % formato: Element:Amount
@@ -96,3 +122,25 @@ list_index(List, Index, Element) :-
     List = [_ | Tail],
     list_index(Tail, Index2, Element),
     Index is Index2 + 1.
+
+% Dada una matriz y un indice se devuelve la columna que se encuentra
+% en ese indice
+matrix_column_index([[Head | Tail]], Index, [Column]) :- 
+    % element_index(Column, [Head|Tail], Index).
+    list_index([Head | Tail], Index, Column).
+matrix_column_index(Matrix, Index, Column) :-
+    Matrix = [Head|Tail],
+    matrix_column_index(Tail, Index, Column2),
+    matrix_column_index([Head], Index, Column1),
+    append(Column1, Column2, Column).
+
+% --------------------------------------------------------------------------
+
+% Este predicado triunfa si el string del 3er parametro es el mismo que el primero
+% pero repetido Amount_of_times veces
+repeat_string_pattern(X,1, X).%:- string(X).
+repeat_string_pattern(X, Amount_of_times, Repeated) :-
+    Amount_of_times > 1,
+    New_amount is Amount_of_times - 1,
+    repeat_string_pattern(X, New_amount, Repeated2),
+    string_concat(X, Repeated2, Repeated),!.
