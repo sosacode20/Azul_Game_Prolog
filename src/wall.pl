@@ -27,8 +27,7 @@ add_to_wall(Wall, Row_index, Tile, New_wall, Score):-
 % Este predicado es para contar la cantidad de azulejos consecutivos en una fila
 % Es un predicado auxiliar para el predicado 'consecutive_wall_tiles'
 consecutive_tiles_([], 0).
-consecutive_tiles_([_:0 | _], 0):-
-    consecutive_tiles_(Tail, Score).
+consecutive_tiles_([_:0 | _], 0).
 consecutive_tiles_([_:1 | Tail], Score):-
     consecutive_tiles_(Tail, Score_0),
     Score is Score_0 + 1.
@@ -70,6 +69,8 @@ consecutive_wall_tiles(Wall, Row_index, Col_index, Number):-
 
 % Predicado para saber dado un wall y un indice de una fila del mismo
 % los azulejos que faltan por posicionar
-free_wall_row_tiles(Wall, Row_index, Tiles):-
+valid_tiles_for_wall_row(Wall, Row_index, Valid_tiles):-
     list_index(Wall, Row_index, Row),
-    findall(Tile, member(Tile:0, Row), Tiles).
+    findall(Tile, member(Tile:0, Row), Valid_tiles).
+
+% -----------------------------------------------------------------
