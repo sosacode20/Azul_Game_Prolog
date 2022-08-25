@@ -144,3 +144,14 @@ repeat_string_pattern(X, Amount_of_times, Repeated) :-
     New_amount is Amount_of_times - 1,
     repeat_string_pattern(X, New_amount, Repeated2),
     string_concat(X, Repeated2, Repeated),!.
+
+% --------------------------------------------------------------------------
+
+% Este predicado triunfa si la lista final es la inicial con indices en aumento
+% comenzando por el indice Index
+indexed_list([Element], Index, [Index:Element]) :-
+    integer(Index).
+indexed_list([Original_list_Head | Original_Tail], Start_index, [Start_index:Original_list_Head | Indexed_tail]) :-
+    integer(Start_index),
+    New_index is Start_index + 1,
+    indexed_list(Original_Tail, New_index, Indexed_tail),!.
