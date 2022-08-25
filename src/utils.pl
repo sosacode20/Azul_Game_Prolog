@@ -145,6 +145,16 @@ repeat_string_pattern(X, Amount_of_times, Repeated) :-
     repeat_string_pattern(X, New_amount, Repeated2),
     string_concat(X, Repeated2, Repeated),!.
 
+% Triunfa si la lista final es el resultado de repetir Amount de veces
+% el Element.
+repeated_list(_, 0, []).
+repeated_list(Element, 1, [Element]).
+repeated_list(Element, Amount, List) :-
+    Amount > 1,
+    New_amount is Amount - 1,
+    repeated_list(Element, New_amount, List_tail),
+    append([Element], List_tail, List),!.
+
 % --------------------------------------------------------------------------
 
 % Este predicado triunfa si la lista final es la inicial con indices en aumento
