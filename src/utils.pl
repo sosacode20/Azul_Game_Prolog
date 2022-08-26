@@ -144,3 +144,43 @@ repeat_string_pattern(X, Amount_of_times, Repeated) :-
     New_amount is Amount_of_times - 1,
     repeat_string_pattern(X, New_amount, Repeated2),
     string_concat(X, Repeated2, Repeated),!.
+
+% Triunfa si la lista final es el resultado de repetir Amount de veces
+% el Element.
+repeated_list(_, 0, []).
+repeated_list(Element, 1, [Element]).
+repeated_list(Element, Amount, List) :-
+    Amount > 1,
+    New_amount is Amount - 1,
+    repeated_list(Element, New_amount, List_tail),
+    append([Element], List_tail, List),!.
+
+% --------------------------------------------------------------------------
+
+% Este predicado triunfa si la lista final es la inicial con indices en aumento
+% comenzando por el indice Index
+indexed_list([Element], Index, [Index:Element]) :-
+    integer(Index).
+indexed_list([Original_list_Head | Original_Tail], Start_index, [Start_index:Original_list_Head | Indexed_tail]) :-
+    integer(Start_index),
+    New_index is Start_index + 1,
+    indexed_list(Original_Tail, New_index, Indexed_tail),!.
+
+% -------------------------------------------------------------------------
+
+% Lower clamp es un predicado que unifica Result con 0 en caso de que
+% Number sea negativo, en otro caso Result unifica con Number
+clamp_to_zero(Number, Result):-
+    Number < 0,
+    Result = 0,!.
+
+clamp_to_zero(Number, Result):-
+    % Si se va por este camino el numero es positivo
+    Result = Number,!.
+
+clamp_up(Number, Top_limit, Result):-
+    Number >= Top_limit,
+    Result = Top_limit,!.
+
+clamp_up(Number, _, Result):-
+    Result = Number,!.
