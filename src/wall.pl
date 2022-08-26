@@ -32,6 +32,7 @@ consecutive_tiles_([_:1 | Tail], Score):-
     consecutive_tiles_(Tail, Score_0),
     Score is Score_0 + 1.
 
+% TODO: Refactorizar esto inspirandose en el predicado 'add_to_penalization_zone'
 consecutive_wall_tiles(Wall, Row_index, Col_index, Number):-
     matrix_column_index(Wall, Col_index, Column), % Obtienes aqui la columna
     list_index(Wall, Row_index, Row), % Obtienes aqui la fila
