@@ -18,11 +18,11 @@ new_board(Player_id, New_board):-
 
 unpack_board(Board, Player_id, Preparation_zone, Wall, Punctuation, Penalization_zone) :-
     Board = [
-        _:Player_id,
-        _:Preparation_zone,
-        _:Wall,
-        _:Punctuation,
-        _:Penalization_zone
+        player:Player_id,
+        preparation_zone:Preparation_zone,
+        wall:Wall,
+        punctuation:Punctuation,
+        penalization:Penalization_zone
     ].
 
 pack_board(Player_id, Preparation_zone, Wall, Punctuation, Penalization_zone, New_board) :-
@@ -83,3 +83,9 @@ alicatado_(
         expanded(Tile:Count, Tiles_to_tape_1),
         append(Tiles_to_tape_1, Tiles_to_tape_0, Tiles_to_tape),
         Punctuation is Punctuation_0 + Punctuation_1,!.
+
+% ----------------------------------------------------------------------------
+
+board_has_a_complete_wall_row(Board, Completed_amount):-
+    unpack_board(Board, _, _, Wall, _, _),
+    wall_has_a_complete_row(Wall, Completed_amount).

@@ -33,3 +33,27 @@ new_game(Game):-
     ],!.
 
 % ---------------------------------------------------------------------------
+
+unpack_game(Game, Bag, Tape, Collections, Boards):-
+    Game = [
+        bag:Bag,
+        tape:Tape,
+        collections:Collections,
+        boards:Boards
+    ].
+
+% Realmente este predicado y el de arriba hacen las mismas cosas
+% solo lo repeti para tener un nombre claro para cuando se lea el proyecto
+pack_game(Bag, Tape, Collections, Boards, Game):-
+    Game = [
+        bag:Bag,
+        tape:Tape,
+        collections:Collections,
+        boards:Boards
+    ].
+
+% ---------------------------------------------------------------------------
+
+is_game_over(Game, Boards_completed):-
+    unpack_game(Game, _, _, _, Boards),
+    findall(Board, (member(Board, Boards), board_has_a_complete_wall_row(Board, _)), Boards_completed).

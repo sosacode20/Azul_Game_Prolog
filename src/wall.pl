@@ -120,3 +120,14 @@ element_representation([Head | Tail],Representation):-
     element_representation(Tail, Representation2),
     element_representation([Head], Representation1),
     append(Representation1, Representation2, Representation).
+
+% ------------------------------------------------------------------------------
+
+complete_row_(Wall_row):-
+    findall(Tile, member(Tile:1, Wall_row), Completed),
+    length(Completed, Length),
+    Length == 5.
+    
+wall_has_a_complete_row(Wall, Amount):-
+    findall(completed, (member(Wall_row, Wall), complete_row_(Wall_row)), Completed),
+    length(Completed, Amount).
