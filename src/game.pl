@@ -1,5 +1,5 @@
 :-[board].
-:-[players].
+:-[players, center, factories].
 
 % predicado para crear los boards de cada uno de los jugadores
 create_new_boards(New_boards):-
@@ -57,3 +57,12 @@ pack_game(Bag, Tape, Collections, Boards, Game):-
 is_game_over(Game, Boards_completed):-
     unpack_game(Game, _, _, _, Boards),
     findall(Board, (member(Board, Boards), board_has_a_complete_wall_row(Board, _)), Boards_completed).
+
+% ---------------------------------------------------------------------------
+
+fill_factories_and_Center(Game_status, New_game_status):-
+    unpack_game(Game_status, Bag, Tape, _, Boards),
+    new_center(Center),
+    new_factories(Bag, Tape, Factories, Updated_bag, Updated_tape),
+    append([Center], Factories, Collections),
+    pack_game(Updated_bag, Updated_tape, Collections, Boards, New_game_status),!.

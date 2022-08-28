@@ -17,7 +17,8 @@ new_factories(Bag, Tape, Factories, Updated_bag, Updated_tape) :-
         append(Bag, Extracted_amount, New_bag),
         new_factories_(New_bag, Factory_count, Factories, Updated_bag),!;
         % Aqui el Amount a extraer tiene que ser menor o igual a 0
-        new_factories_(Bag, Factory_count, Factories, Updated_bag),!
+        new_factories_(Bag, Factory_count, Factories, Updated_bag),
+        Updated_tape = Tape, !
     ).
 
 
