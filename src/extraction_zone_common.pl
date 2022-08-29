@@ -24,3 +24,11 @@ extract_first_(Collection, [first:1], New_collection) :-
     append(First_part, Tail, New_collection).
     
 extract_first_(Collection, [], Collection).
+
+% ----------------------------------------------------------------
+
+% El siguiente predicado es para saber si una Factoria o el Centro tiene un
+% azulejo en especifico presente
+
+collection_has_tile(Collection, Tile):-
+    list_index(Collection, _, Tile:_),!.
