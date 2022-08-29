@@ -1,5 +1,5 @@
 :-[board].
-:-[players, center, factories].
+:-[players, center, factories, tape].
 
 % predicado para crear los boards de cada uno de los jugadores
 create_new_boards(New_boards):-

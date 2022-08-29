@@ -8,7 +8,7 @@
 % Aqui se debe Notar que Tile_to_extract tiene que ser un Tile valido, por ende
 % no se puede pedir extraer la ficha del jugador inicial, en cuyo caso fallara
 extract_from_tile_collection(Collection, Tile_to_extract, Extracted_tiles, New_collection) :-
-    tiles(Tile_to_extract),
+    % tiles(Tile_to_extract),
     extract_first_(Collection, Extracted_first, New_collection_0), % Extracted_first puede ser lista vacia
     list_index(New_collection_0, Index, Tile_to_extract:Amount),!,
     split(Index, New_collection_0, First_part, [_ | Tail]),
