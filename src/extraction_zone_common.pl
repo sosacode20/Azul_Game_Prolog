@@ -8,7 +8,7 @@
 % Aqui se debe Notar que Tile_to_extract tiene que ser un Tile valido, por ende
 % no se puede pedir extraer la ficha del jugador inicial, en cuyo caso fallara
 extract_from_tile_collection(Collection, Tile_to_extract, Extracted_tiles, New_collection) :-
-    tiles(Tile_to_extract),
+    % tiles(Tile_to_extract),
     extract_first_(Collection, Extracted_first, New_collection_0), % Extracted_first puede ser lista vacia
     list_index(New_collection_0, Index, Tile_to_extract:Amount),!,
     split(Index, New_collection_0, First_part, [_ | Tail]),
@@ -24,3 +24,11 @@ extract_first_(Collection, [first:1], New_collection) :-
     append(First_part, Tail, New_collection).
     
 extract_first_(Collection, [], Collection).
+
+% ----------------------------------------------------------------
+
+% El siguiente predicado es para saber si una Factoria o el Centro tiene un
+% azulejo en especifico presente
+
+collection_has_tile(Collection, Tile):-
+    list_index(Collection, _, Tile:_),!.

@@ -24,6 +24,7 @@ inside(X, Low:High):-
 % este predicado triunfa cuando la lista Expanded es el resultado de transformar
 % todos los elementos Element:Amount en una lista que contenga al elemento 'Element'
 % Amount veces
+expanded(_:0, []):-!.
 expanded(X:1, [X]):- atom(X),!.
 expanded(X:Amount, Expanded):-
     atom(X),
