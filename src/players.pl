@@ -1,9 +1,9 @@
 :- [utils].
-:- dynamic player/2, first_player_index/1.
+:- dynamic player/2, first_player_index/1, game_style/1.
 
 % Este predicado permite saber si el nombre del estilo dado es valido en el simulador.
-game_style(Style):-
-    member(Style, [greedy, random]).
+% game_style(Style):-
+%     member(Style, [greedy, random]).
 
 % Este predicado agrega a la base de datos un nuevo jugador si no existia previamente su nombre guardado
 create_player(Id, Style):-

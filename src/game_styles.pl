@@ -2,6 +2,8 @@
 
 % Aqui estaran los predicados necesarios para permitir jugar con diferentes
 % estilos o estrategias
+game_style(random).
+game_style(greedy).
 
 not_plays_for_player(Player_index):-
     get_player_by_index(Player_index, Player_name:_),
@@ -11,19 +13,19 @@ not_plays_for_player(Player_index):-
 % Este predicado busca en el juego el tablero del jugador seleccionado
 % y escoge de manera aleatoria una de todas las jugadas posibles y la asigna
 % a Selected_play
-random_play(Game, Player_index, Selected_play):-
+random(Game, Player_index, Selected_play):-
     get_all_plays(Game, Player_index, Plays),
     random_member(Selected_play, Plays),!.
 
 % Esta segunda opcion no se llamara nunca a no ser que la lista de jugadas
 % posibles sea vacia
-random_play(_, Player_index, _):-
+random(_, Player_index, _):-
     not_plays_for_player(Player_index),!.
 
 % Este predicado busca en el juego el tablero del jugador seleccionado
 % y escoge de todas las jugadas posibles la que considera mejor segun el criterio greedy
 % y la asigna a Selected_play
-greedy_play(Game, Player_index, Selected_play):-
+greedy(Game, Player_index, Selected_play):- % Esto se podria refactorizar con el metapredicado foldl
     get_all_plays(Game, Player_index, Plays),
     findall(
         Play:Punctuation,
@@ -40,7 +42,7 @@ greedy_play(Game, Player_index, Selected_play):-
     ),
     best_play_(Plays_and_punctuations, Selected_play),!.
 
-greedy_play(_, Player_index, _):-
+greedy(_, Player_index, _):-
     not_plays_for_player(Player_index),!.
 
 % ----------------- Utils for this file ---------------
