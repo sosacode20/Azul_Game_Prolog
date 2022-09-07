@@ -34,6 +34,10 @@ pack_board(Player_id, Preparation_zone, Wall, Punctuation, Penalization_zone, Ne
         penalization: Penalization_zone
     ].
 
+get_player_index_from_board(Board, Player_index):-
+    unpack_board(Board, Player_id, _, _, _, _),
+    get_player_by_id(Player_id, Player_index, _).
+
 % -----------------------------------------------
 
 alicatado(Board, New_board, Tiles_to_tape) :-

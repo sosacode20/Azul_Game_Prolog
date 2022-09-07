@@ -33,6 +33,8 @@ new_game(Game):-
     ],!.
 
 % ---------------------------------------------------------------------------
+% -------------------- Predicados auxiliares para el Game -------------------
+% ---------------------------------------------------------------------------
 
 unpack_game(Game, Bag, Tape, Collections, Boards):-
     Game = [
@@ -51,6 +53,10 @@ pack_game(Bag, Tape, Collections, Boards, Game):-
         collections:Collections,
         boards:Boards
     ].
+
+get_board_from_game(Game, Player_index, Board):-
+    unpack_game(Game, _, _, _, Boards),
+    split(Player_index, Boards, _, [Board | _]).
 
 % ---------------------------------------------------------------------------
 

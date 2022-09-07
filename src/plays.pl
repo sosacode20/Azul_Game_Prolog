@@ -26,9 +26,9 @@ get_all_plays(Game, Player_index, Plays):-
 apply_play_to_game(Game, Player_index, Play, New_game_status) :-
     Play = Collection_index:Tile:Preparation_zone_index,
     unpack_game(Game, Bag, Tape, Collections, Boards),
-    % list_index(Boards, Player_index, Board),
+    % Esto siguiente es para obtener el Board
     split(Player_index, Boards, Left_boards, [Board | Right_boards]),
-    % unpack_board(Board, Player_id, Preparation_zone, Wall, Punctuation, Penalization),
+    % Esto es para obtener la coleccion pedida
     split(Collection_index, Collections, Left_collections, [Selected_collection | Right_collections]),
     extract_from_tile_collection(Selected_collection, Tile, Extracted_tiles, New_selected_collection),
     apply_to_board_(Board, Tape, Extracted_tiles, Preparation_zone_index, Updated_board, Updated_tape),
